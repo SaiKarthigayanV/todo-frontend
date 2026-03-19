@@ -12,7 +12,7 @@ export default function Todo() {
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
 
-    const apiUrl = import.meta.env.VITE_API_URL;
+    const apiUrl = import.meta.env.REACT_APP_API_URL;
 
     const handleSubmit = () => {
         setError("")
