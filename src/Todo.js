@@ -12,7 +12,7 @@ export default function Todo() {
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
 
-    const apiUrl = "http://localhost:5000"
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const handleSubmit = () => {
         setError("")
