@@ -43,6 +43,7 @@ export default function Todo() {
 
     useEffect(() => {
         getItems()
+        // eslint-disable-next-line
     }, [])
 
     const getItems = () => {
@@ -56,47 +57,47 @@ export default function Todo() {
     }
 
     const handleEdit = (item) => {
-        setEditId(item._id); 
+        setEditId(item._id);
         setEditTitle(item.title);
         setEditDescription(item.description)
     }
 
     const handleUpdate = () => {
-  setError("");
+        setError("");
 
-  if (editTitle.trim() && editDescription.trim()) {
-    fetch(`${apiUrl}/todo/${editId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        title: editTitle,
-        description: editDescription
-      })
-    })
-      .then(res => res.json())
-      .then(updatedTodo => {
-        setTodos(todos.map(item =>
-          item._id === editId ? updatedTodo : item
-        ));
-        setEditId(-1);
-      })
-      .catch(() => setError("Update failed"));
-  }
-};
+        if (editTitle.trim() && editDescription.trim()) {
+            fetch(`${apiUrl}/todo/${editId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: editTitle,
+                    description: editDescription
+                })
+            })
+                .then(res => res.json())
+                .then(updatedTodo => {
+                    setTodos(todos.map(item =>
+                        item._id === editId ? updatedTodo : item
+                    ));
+                    setEditId(-1);
+                })
+                .catch(() => setError("Update failed"));
+        }
+    };
 
-const handleDelete = (id) => {
-    if (window.confirm("Are You Sure you want to delete this task...")) {
-        fetch(`${apiUrl}/todo/${id}`, {
-            method: "DELETE"
-        })
-        .then(() => {
-            setTodos(todos.filter(item => item._id !== id))
-        })
-        .catch(() => setError("Delete failed"))
+    const handleDelete = (id) => {
+        if (window.confirm("Are You Sure you want to delete this task...")) {
+            fetch(`${apiUrl}/todo/${id}`, {
+                method: "DELETE"
+            })
+                .then(() => {
+                    setTodos(todos.filter(item => item._id !== id))
+                })
+                .catch(() => setError("Delete failed"))
+        }
     }
-}
 
 
 
@@ -127,7 +128,7 @@ const handleDelete = (id) => {
                         <li key={item._id} className="list-group-item bg-dark text-light d-flex justify-content-between align-items-center my-2">
                             <div className="d-flex flex-column me-2">
                                 {
-                                    editId == -1 || editId !== item._id ? <>
+                                    editId === -1 || editId !== item._id ? <>
                                         <span className="fw-bold">{item.title}</span>
                                         <span>{item.description}</span>
                                     </> : <>
@@ -140,9 +141,9 @@ const handleDelete = (id) => {
                             </div>
 
                             <div className="d-flex gap-2">
-                                { editId == -1 || editId !== item._id ?  <button className="btn btn-warning" onClick={() => handleEdit(item)}>Edit</button> : <button onClick={handleUpdate}>Update</button> }
-                                { editId == -1 ? <button className="btn btn-danger" onClick={() => handleDelete(item._id)}>Delete</button> :
-                                <button className="btn btn-danger" onClick={handleEditCancel}>Cancel</button> }
+                                {editId === -1 || editId !== item._id ? <button className="btn btn-warning" onClick={() => handleEdit(item)}>Edit</button> : <button onClick={handleUpdate}>Update</button>}
+                                {editId === -1 ? <button className="btn btn-danger" onClick={() => handleDelete(item._id)}>Delete</button> :
+                                    <button className="btn btn-danger" onClick={handleEditCancel}>Cancel</button>}
                             </div>
                         </li>
                     )
