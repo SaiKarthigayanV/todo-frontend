@@ -12,7 +12,8 @@ export default function Todo() {
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
 
-    const apiUrl = import.meta.env.REACT_APP_API_URL;
+    const apiUrl = process.env.REACT_APP_API_URL;
+    console.log(apiUrl);
 
     const handleSubmit = () => {
         setError("")
@@ -39,7 +40,6 @@ export default function Todo() {
                 setError("Unable tp create Todo Item...")
             })
         }
-        console.log("API URL:", process.env.REACT_APP_API_URL);
     }
 
     useEffect(() => {
